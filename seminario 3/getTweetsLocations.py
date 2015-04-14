@@ -19,6 +19,9 @@ CONSUMER_SECRET = 'yGuNtghvbUz2EOctdwNQzktxaqvCDgx0MosZFkzswbgJsvRXbC'
 OAUTH_TOKEN = '589371810-g4tKuN81iSMEeG8odVmzPqgFZKkqSuE7x4FEzxCN'
 OAUTH_TOKEN_SECRET = 'aVqCBJMyfDHA8dttltClRvVy9Gt8wZrnjtgC3RVOlHpQP'
 
+app = Flask(__name__)
+GoogleMaps(app)
+
 # Consigue el API de Twitter
 auth = twitter.oauth.OAuth(OAUTH_TOKEN, OAUTH_TOKEN_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
 twitter_api = twitter.Twitter(auth=auth)
@@ -55,9 +58,6 @@ tweets = tweets_search_text(text, geo)
 coordinates = get_tweets_coordinates(tweets)
 geoSplit = geo.split(",") # Dividimos para posteriormente poner la latitud y longitud correcta en la funcion para generar el mapa
 
-app = Flask(__name__)
-GoogleMaps(app)
-
 @app.route("/")
 def mapview():
     mymap = Map(
@@ -67,7 +67,7 @@ def mapview():
         markers=coordinates,
         style="height:800px;width:800px;margin:0;"
     ) 
-    return render_template('mapa.html', mymap=mymap)
+    return render_template('mymap.html', mymap=mymap)
 
 
 if __name__ == "__main__":
